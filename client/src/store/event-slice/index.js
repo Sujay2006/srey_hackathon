@@ -6,6 +6,7 @@ const API_URL = `${import.meta.env.VITE_API_URL}/api/events`;
 const initialState = {
   events: [],
   userEvents: [],
+  eventDetail: [],
   isLoading: false,
   error: null,
 };
@@ -30,6 +31,10 @@ export const getAllEvents = createAsyncThunk("events/getAll", async () => {
 // 3. Get Events by User ID
 export const getEventsByUserId = createAsyncThunk("events/getByUserId", async (userId) => {
   const response = await axios.get(`${API_URL}/user/${userId}`);
+  return response.data;
+});
+export const getEventDetail = createAsyncThunk("events/getDetail", async (id) => {
+  const response = await axios.get(`${API_URL}/detail/${id}`);
   return response.data;
 });
 
@@ -92,6 +97,17 @@ const eventSlice = createSlice({
         state.userEvents = action.payload;
       })
       .addCase(getEventsByUserId.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getEventDetail.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getEventDetail.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.eventDetail = action.payload;
+      })
+      .addCase(getEventDetail.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       })

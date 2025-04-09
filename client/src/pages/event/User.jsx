@@ -19,7 +19,7 @@ const User = () => {
   }, [user,dispatch]);
 
   const handleCardClick = (eventId) => {
-    navigate(`/event/${eventId}`);
+    navigate(`/event/detail/${eventId}`);
   };
 
   return (

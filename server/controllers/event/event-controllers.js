@@ -41,12 +41,12 @@ const uploadEvent = async (req, res) => {
 // Get all events
 const getAllEvents = async (req, res) => {
     try {
-      console.log("coming");
+      // console.log("coming");
       
       const events = await Event.find()
         .populate('userId', 'userName')
         .sort({ createdAt: -1 });
-      console.log(events);
+      // console.log(events);
       
       res.status(200).json(events);
     } catch (error) {
@@ -66,6 +66,22 @@ const getAllEvents = async (req, res) => {
       res.status(500).json({ message: 'Error fetching user events', error });
     }
   };
+  const getEventDetail = async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const eventDetail = await Event.findById(id).populate('userId', 'userName');
+  
+      if (!eventDetail) {
+        return res.status(404).json({ message: 'Event not found' });
+      }
+  
+      res.status(200).json(eventDetail);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching event detail', error });
+    }
+  };
+  
   
 
 // Delete event
@@ -115,5 +131,6 @@ module.exports = {
   getAllEvents,
   getEventByUserId,
   deleteEvent,
-  updateEvent
+  updateEvent,
+  getEventDetail,
 };
