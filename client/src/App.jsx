@@ -6,6 +6,9 @@ import AuthLogin from './pages/auth/login';
 import AuthRegister from './pages/auth/register';
 import CheckAuth from './components/common/check-auth';
 import AuthLayout from './components/auth/layout';
+import Home from './pages/event/Home';
+import User from './pages/event/User';
+import EventLayout from './components/event/layout';
 
 function App() {
   
@@ -26,6 +29,14 @@ function App() {
           }>
             <Route path="login" element={<AuthLogin />} />
             <Route path="register" element={<AuthRegister />} />
+          </Route>
+          <Route path="/event" element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <EventLayout />
+            </CheckAuth>
+          }>
+            <Route path="home" element={<Home />} />
+            <Route path="user" element={<User />} />
           </Route>
         </Routes>
     </div>

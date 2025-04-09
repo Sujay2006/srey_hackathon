@@ -4,10 +4,13 @@ const cloudinary = require('../../utils/cloudinary');
 // Upload and create event
 const uploadEvent = async (req, res) => {
   try {
-    const { heading, paragraph, userId } = req.body;
+    const { heading, paragraph, userId , location} = req.body;
     const files = req.files;
-
+    console.log(heading,userId,location, files);
+    
     if (!files || files.length === 0) {
+      console.log("No images uploaded");
+      
       return res.status(400).json({ message: 'No images uploaded' });
     }
 
@@ -23,6 +26,7 @@ const uploadEvent = async (req, res) => {
       userId,
       heading,
       paragraph,
+      location,
       images: imageUrls
     });
 
@@ -36,24 +40,30 @@ const uploadEvent = async (req, res) => {
 
 // Get all events
 const getAllEvents = async (req, res) => {
-  try {
-    const events = await Event.find().sort({ createdAt: -1 });
-    res.status(200).json(events);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching events', error });
-  }
-};
-
-// Get events by user ID
-const getEventByUserId = async (req, res) => {
-  const { userId } = req.params;
-  try {
-    const events = await Event.find({ userId }).sort({ createdAt: -1 });
-    res.status(200).json(events);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching user events', error });
-  }
-};
+    try {
+      const events = await Event.find()
+        .populate('userId', 'userName') // 👈 fetches userName
+        .sort({ createdAt: -1 });
+  
+      res.status(200).json(events);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching events', error });
+    }
+  };
+  
+  const getEventByUserId = async (req, res) => {
+    const { userId } = req.params;
+    try {
+      const events = await Event.find({ userId })
+        .populate('userId', 'userName') // 👈 fetches userName
+        .sort({ createdAt: -1 });
+  
+      res.status(200).json(events);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching user events', error });
+    }
+  };
+  
 
 // Delete event
 const deleteEvent = async (req, res) => {

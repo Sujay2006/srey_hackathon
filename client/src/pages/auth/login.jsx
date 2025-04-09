@@ -30,7 +30,7 @@ const AuthLogin = () => {
         if (userRole === 'admin') {
           navigate('/admin/dashboard');
         } else if (userRole === 'user') {
-          navigate('/shop/home');
+          navigate('/event/home');
         } else {
           navigate('/'); // Fallback in case the role is unexpected
         }

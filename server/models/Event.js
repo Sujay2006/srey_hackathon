@@ -20,10 +20,13 @@ const eventSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  location: {
+    type: String,
+    required: true,
+    trim: true,
+  },
 }, {
-  timestamps: true, // adds createdAt and updatedAt fields
+  timestamps: true,
 });
 
-
-const Event = mongoose.model('Event', eventSchema);
-module.exports = Event;
+module.exports = mongoose.model('Event', eventSchema);
