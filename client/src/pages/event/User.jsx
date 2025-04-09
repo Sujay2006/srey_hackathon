@@ -12,8 +12,9 @@ const User = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user?._id) {
-      dispatch(getEventsByUserId(user._id));
+    
+    if (user?.id) {
+      dispatch(getEventsByUserId(user.id));
     }
   }, [user,dispatch]);
 

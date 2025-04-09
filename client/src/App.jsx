@@ -9,6 +9,8 @@ import AuthLayout from './components/auth/layout';
 import Home from './pages/event/Home';
 import User from './pages/event/User';
 import EventLayout from './components/event/layout';
+import Search from './pages/event/Search';
+import Detail from './pages/event/Detail';
 
 function App() {
   
@@ -37,6 +39,8 @@ function App() {
           }>
             <Route path="home" element={<Home />} />
             <Route path="user" element={<User />} />
+            <Route path="search" element={<Search />} />
+            <Route path="detail/:id" element={<Detail />} />
           </Route>
         </Routes>
     </div>

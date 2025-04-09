@@ -41,10 +41,13 @@ const uploadEvent = async (req, res) => {
 // Get all events
 const getAllEvents = async (req, res) => {
     try {
+      console.log("coming");
+      
       const events = await Event.find()
-        .populate('userId', 'userName') // 👈 fetches userName
+        .populate('userId', 'userName')
         .sort({ createdAt: -1 });
-  
+      console.log(events);
+      
       res.status(200).json(events);
     } catch (error) {
       res.status(500).json({ message: 'Error fetching events', error });
@@ -55,7 +58,7 @@ const getAllEvents = async (req, res) => {
     const { userId } = req.params;
     try {
       const events = await Event.find({ userId })
-        .populate('userId', 'userName') // 👈 fetches userName
+        .populate('userId', 'userName') 
         .sort({ createdAt: -1 });
   
       res.status(200).json(events);

@@ -22,6 +22,8 @@ export const uploadEvent = createAsyncThunk("events/upload", async (formData) =>
 // 2. Get All Events
 export const getAllEvents = createAsyncThunk("events/getAll", async () => {
   const response = await axios.get(API_URL);
+  console.log(response.data,"response");
+  
   return response.data;
 });
 
