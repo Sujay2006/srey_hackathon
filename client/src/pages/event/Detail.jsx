@@ -9,6 +9,24 @@ function Detail() {
   const dispatch = useDispatch();
   const { eventDetail, isLoading } = useSelector((state) => state.event);
 
+  const formatDate = (isoString) => {
+    if (!isoString) return 'Invalid Date';
+  
+    const date = new Date(isoString);
+    if (isNaN(date)) return 'Invalid Date';
+  
+    const options = {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    };
+  
+    return new Intl.DateTimeFormat('en-GB', options).format(date);
+  };
+  
   useEffect(() => {
     if (id) dispatch(getEventDetail(id));
   }, [id]);
@@ -44,7 +62,7 @@ function Detail() {
 
       {/* Timestamp */}
       <p className="text-sm text-gray-500 text-right">
-        Created on: {format(new Date(createdAt), 'dd MMM yyyy, hh:mm a')}
+        Created on: {formatDate(eventDetail?.createdAt)}
       </p>
     </div>
   );
