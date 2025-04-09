@@ -35,7 +35,9 @@ const User = () => {
             <EventCard key={event._id} event={event} onClick={() => handleCardClick(event._id)} />
           ))
         ) : (
-          <p>No events found.</p>
+          <p className="text-gray-600 text-lg mb-6 ">
+          Looks like your event space is still waiting for its first story! Whether it's a Travel, a celebration, or something exciting — go ahead and create your first event.
+        </p>
         )}
       </div>
     </div>
