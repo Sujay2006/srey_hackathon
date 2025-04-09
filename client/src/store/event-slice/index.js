@@ -7,6 +7,7 @@ const initialState = {
   events: [],
   userEvents: [],
   eventDetail: [],
+  searchResult :[],
   isLoading: false,
   error: null,
 };
@@ -55,10 +56,25 @@ export const updateEvent = createAsyncThunk("events/update", async ({ id, formDa
   return response.data;
 });
 
+export const getSearchResult = createAsyncThunk(
+  "/event/getSearchResult",
+  async (keyword) => {
+    const response = await axios.get(
+      `${API_URL}/search/${keyword}`
+    );
+
+    return response.data;
+  }
+);
+
 const eventSlice = createSlice({
   name: "event",
   initialState,
-  reducers: {},
+  reducers : {
+      resetSearchResult: (state)=>{
+          state.searchResult = []
+      }
+  },
   extraReducers: (builder) => {
     builder
 
@@ -112,6 +128,16 @@ const eventSlice = createSlice({
         state.error = action.error.message;
       })
 
+      .addCase(getSearchResult.pending , (state)=>{
+            state.isLoading =true
+        }).addCase(getSearchResult.fulfilled , (state, action)=>{
+            state.isLoading =false
+            state.searchResult = action.payload.data
+        }).addCase(getSearchResult.rejected , (state)=>{
+            state.isLoading =false
+            state.searchResult = []
+        })
+
       // Delete Event
       .addCase(deleteEvent.pending, (state) => {
         state.isLoading = true;
@@ -146,5 +172,7 @@ const eventSlice = createSlice({
       });
   },
 });
+
+export const {resetSearchResult} = eventSlice.actions
 
 export default eventSlice.reducer;
