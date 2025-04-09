@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 const authRouter = require('./routes/auth/auth-routes');
+const eventRouter = require('./routes/event/event-routes');
 
 mongoose.connect(process.env.MONGODB_URI).then(() => console.log("MongoDB connected")).catch((error)=> console.log(error));
 
@@ -32,5 +33,6 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use("/api/auth", authRouter);
+app.use("/api/events", eventRouter);
 
 app.listen(PORT, () => console.log(`Server is now running on port ${PORT}`));
