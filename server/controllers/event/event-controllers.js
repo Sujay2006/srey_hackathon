@@ -4,7 +4,7 @@ const cloudinary = require('../../utils/cloudinary');
 // Upload and create event
 const uploadEvent = async (req, res) => {
   try {
-    const { heading, paragraph, userId , location} = req.body;
+    const { heading, paragraph, userId , location, isCultureExtincting} = req.body;
     const files = req.files;
     console.log(heading,userId,location, files);
     
@@ -27,7 +27,8 @@ const uploadEvent = async (req, res) => {
       heading,
       paragraph,
       location,
-      images: imageUrls
+      images: imageUrls,
+      isCultureExtincting
     });
 
     await newEvent.save();
@@ -45,7 +46,7 @@ const getAllEvents = async (req, res) => {
       
       const events = await Event.find()
         .populate('userId', 'userName')
-        .sort({ createdAt: -1 });
+        .sort({ isCultureExtincting: -1,createdAt: -1 });
       // console.log(events);
       
       res.status(200).json(events);

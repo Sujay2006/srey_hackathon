@@ -1,6 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { useState, useEffect } from "react";
-import { ThumbsUp, ThumbsDown, ThumbsUpIcon, ThumbsDownIcon } from "lucide-react";
+import {
+  ThumbsUp,
+  ThumbsDown,
+  ThumbsUpIcon,
+  ThumbsDownIcon,
+  Pin,
+} from "lucide-react";
 
 const EventCard = ({ event, onClick }) => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -28,15 +34,29 @@ const EventCard = ({ event, onClick }) => {
   return (
     <Card
       onClick={onClick}
-      className="cursor-pointer hover:shadow-lg transition rounded-2xl overflow-hidden"
+      className="relative cursor-pointer hover:shadow-lg transition rounded-2xl overflow-hidden"
     >
+      {/* Pin icon if isCultureExtincting is true */}
+      {event.isCultureExtincting && (
+  <div className="absolute top-0 right-0 group">
+    <div className="bg-yellow-200 text-yellow-800 rounded-full p-1 shadow-md">
+      <Pin className="w-4 h-4" />
+    </div>
+    {/* Tooltip */}
+    <div className="absolute right-full mr-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition bg-black text-white text-xs px-2 py-1 rounded-md shadow-md whitespace-nowrap z-10">
+      This event is about an extincting culture
+    </div>
+  </div>
+)}
+
       <CardContent className="p-0">
         <div className="p-4">
-        <div className="flex justify-between gap-2 capitalize text-lg text-muted-foreground">
+          <div className="flex justify-between gap-2 capitalize text-lg text-muted-foreground">
             <span> {event.userId?.userName || "Unknown"}</span>
             <span>{event.location}</span>
           </div>
         </div>
+
         {event.images?.length > 0 && (
           <img
             src={event.images[currentImage]}
@@ -44,11 +64,11 @@ const EventCard = ({ event, onClick }) => {
             className="w-full h-48 object-cover"
           />
         )}
+
         <div className="p-4">
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-lg font-bold">{event.heading}</h2>
           </div>
-          
 
           <p className="line-clamp-2 mt-3 text-sm text-gray-600">
             {event.paragraph}

@@ -19,6 +19,7 @@ const AddEventSheet = () => {
     paragraph: "",
     location: "",
     images: null,
+    isCultureExtincting: false, 
   });
   const [exting, setExting] = useState(false);
 
@@ -41,6 +42,7 @@ const AddEventSheet = () => {
     data.append("paragraph", formData.paragraph);
     data.append("location", formData.location);
     data.append("userId", user.id);
+    data.append("isCultureExtincting", formData.isCultureExtincting);
     if (formData.images) {
       for (let i = 0; i < formData.images.length; i++) {
         data.append("images", formData.images[i]);
@@ -106,9 +108,9 @@ const AddEventSheet = () => {
           <input
             type="checkbox"
             id="isCultureExtincting"
-            checked={exting}
-            onChange={() =>
-              setExting(!exting)
+            checked={formData.isCultureExtincting}
+            onChange={(e) =>
+              setFormData({ ...formData, isCultureExtincting: e.target.checked })
             }
           />
           <label htmlFor="isCultureExtincting" className="text-sm">
