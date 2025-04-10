@@ -37,7 +37,7 @@ function App() {
               <EventLayout />
             </CheckAuth>
           }>
-            <Route path="home" element={<Home />} />
+            <Route path="c&h" element={<Home />} />
             <Route path="user" element={<User />} />
             <Route path="search" element={<Search />} />
             <Route path="detail/:id" element={<Detail />} />

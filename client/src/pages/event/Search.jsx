@@ -36,7 +36,7 @@ function Search() {
                     value = {keyword}
                     onChange={(event)=> setKeyword(event.target.value)}
                     name = 'keyword'
-                    placeholder='Search Cultur & Heritage....' 
+                    placeholder='Search Culture & Heritage....' 
                     className="py-6"/>
             </div>
         </div>

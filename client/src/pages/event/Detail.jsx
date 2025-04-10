@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getEventDetail } from '@/store/event-slice';
-import { Flag, ThumbsDown, ThumbsDownIcon, ThumbsUp, ThumbsUpIcon } from 'lucide-react';
+import { Flag, Pin, ThumbsDown, ThumbsDownIcon, ThumbsUp, ThumbsUpIcon } from 'lucide-react';
 
 function Detail() {
   const { id } = useParams();
@@ -62,7 +62,18 @@ function Detail() {
   const { heading, images, paragraph, createdAt } = eventDetail;
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
+    <div className="max-w-4xl mx-auto p-4 relative">
+      {eventDetail?.isCultureExtincting && (
+        <div className="absolute top-6 right-5 group">
+          <div className="bg-yellow-200 text-yellow-800 rounded-full p-1 shadow-md">
+            <Pin className="w-4 h-4" />
+          </div>
+          {/* Tooltip */}
+          <div className="absolute right-full mr-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition bg-black text-white text-xs px-2 py-1 rounded-md shadow-md whitespace-nowrap z-10">
+            This event is about an extincting culture
+          </div>
+        </div>
+      )}
       {/* Heading */}
       <h1 className="text-3xl capitalize font-bold mb-4 text-center">{heading}</h1>
 

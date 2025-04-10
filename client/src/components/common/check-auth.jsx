@@ -19,13 +19,13 @@ function CheckAuth({ isAuthenticated, user, children }) {
     isAuthenticated &&
     (location.pathname.includes("/login") || location.pathname.includes("/register"))
   ) {
-    return <Navigate to="/event/home" replace />;
+    return <Navigate to="/event/c&h" replace />;
   }
 
   // Redirect root path based on auth
   if (location.pathname === "/") {
     return isAuthenticated ? (
-      <Navigate to="/event/home" replace />
+      <Navigate to="/event/c&h" replace />
     ) : (
       <Navigate to="/auth/login" replace />
     );

@@ -66,7 +66,7 @@ const AddEventSheet = () => {
       <SheetTrigger asChild>
         <Button>Add New Event</Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="overflow-y-auto ">
         <SheetHeader>
           <SheetTitle>Add Event</SheetTitle>
         </SheetHeader>
@@ -109,9 +109,11 @@ const AddEventSheet = () => {
             type="checkbox"
             id="isCultureExtincting"
             checked={formData.isCultureExtincting}
-            onChange={(e) =>
-              setFormData({ ...formData, isCultureExtincting: e.target.checked })
-            }
+            onChange={(e) => {
+              setFormData({ ...formData, isCultureExtincting: e.target.checked });
+              setExting(!exting);
+            }}
+            
           />
           <label htmlFor="isCultureExtincting" className="text-sm">
             Is the culture & heritage extinguishing?
