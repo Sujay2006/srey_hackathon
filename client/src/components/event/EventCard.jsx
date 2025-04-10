@@ -32,7 +32,7 @@ const EventCard = ({ event, onClick }) => {
     >
       <CardContent className="p-0">
         <div className="p-4">
-        <div className="flex justify-between capitalize text-lg text-muted-foreground">
+        <div className="flex justify-between gap-2 capitalize text-lg text-muted-foreground">
             <span> {event.userId?.userName || "Unknown"}</span>
             <span>{event.location}</span>
           </div>
