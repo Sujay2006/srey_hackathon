@@ -20,6 +20,7 @@ const AddEventSheet = () => {
     location: "",
     images: null,
   });
+  const [exting, setExting] = useState(false);
 
   const resetForm = () => {
     setFormData({
@@ -101,6 +102,31 @@ const AddEventSheet = () => {
               accept="image/*"
             />
           </div>
+          <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            id="isCultureExtincting"
+            checked={exting}
+            onChange={() =>
+              setExting(!exting)
+            }
+          />
+          <label htmlFor="isCultureExtincting" className="text-sm">
+            Is the culture & heritage extinguishing?
+          </label>
+        </div>
+        {exting && (
+          <div>
+            <Label>Upload Supporting Document</Label>
+            <Input
+              type="file"
+              accept=".pdf,.doc,.docx"
+              // onChange={(e) =>
+              //   setFormData({ ...formData, document: e.target.files[0] })
+              // }
+            />
+          </div>
+        )}
           <Button type="submit">Submit</Button>
         </form>
       </SheetContent>

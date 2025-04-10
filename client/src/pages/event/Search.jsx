@@ -3,10 +3,11 @@ import { Input } from '@/components/ui/input';
 import { getSearchResult, resetSearchResult } from '@/store/event-slice';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 function Search() {
   const dispatch = useDispatch()
+  const navigate = useNavigate();
     const [keyword, setKeyword] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
     const { searchResult, isLoading } = useSelector((state) => state.event);
@@ -23,6 +24,9 @@ function Search() {
       }
   }, [keyword]);
   console.log(searchResult);
+  const handleCardClick = (eventId) => {
+    navigate(`/event/detail/${eventId}`);
+  };
   
   return (
     <div className="mx-auto container md:px-6 px-4 py-8">

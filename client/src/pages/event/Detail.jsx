@@ -2,13 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getEventDetail } from '@/store/event-slice';
+import { Flag, ThumbsDown, ThumbsDownIcon, ThumbsUp, ThumbsUpIcon } from 'lucide-react';
 
 function Detail() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { eventDetail, isLoading } = useSelector((state) => state.event);
-
+  const [liked, setLiked] = useState(null);
   const [currentImage, setCurrentImage] = useState(0);
+  const [reported, setReported] = useState(false);
+  const handleReport = () => {
+    setReported(!reported);
+  };
 
   useEffect(() => {
     if (id) dispatch(getEventDetail(id));
@@ -45,7 +50,15 @@ function Detail() {
   if (isLoading || !eventDetail) {
     return <div className="text-center py-10">Loading...</div>;
   }
+  const handleLike = (e) => {
+    e.stopPropagation();
+    setLiked(liked === "like" ? null : "like");
+  };
 
+  const handleDislike = (e) => {
+    e.stopPropagation();
+    setLiked(liked === "dislike" ? null : "dislike");
+  };
   const { heading, images, paragraph, createdAt } = eventDetail;
 
   return (
@@ -73,9 +86,46 @@ function Detail() {
       <p className="text-gray-700 text-lg leading-relaxed mb-6">{paragraph}</p>
 
       {/* Timestamp */}
-      <p className="text-sm text-gray-500 text-right">
-        Created on: {formatDate(createdAt)}
-      </p>
+      <div className="flex justify-between items-center">
+      <div className="flex items-center gap-4 mt-4">
+            <button
+              onClick={handleLike}
+              className={`flex items-center gap-1 text-sm ${
+                liked === "like" ? "text-green-600" : "text-gray-500"
+              } hover:scale-105 transition`}
+            >
+              {liked === "like" ? (
+                <ThumbsUpIcon className="h-4 w-4 fill-green-600" />
+              ) : (
+                <ThumbsUp className="h-4 w-4" />
+              )}
+            </button>
+
+            <button
+              onClick={handleDislike}
+              className={`flex items-center gap-1 text-sm ${
+                liked === "dislike" ? "text-red-600" : "text-gray-500"
+              } hover:scale-105 transition`}
+            >
+              {liked === "dislike" ? (
+                <ThumbsDownIcon className="h-4 w-4 fill-red-600" />
+              ) : (
+                <ThumbsDown className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+        <p className="text-sm text-gray-500 text-right">
+          Created on: {formatDate(createdAt)}
+        </p>
+        <button onClick={handleReport} className="hover:scale-105 transition">
+          <Flag
+            className={`h-4 w-4 ${
+              reported ? "fill-red-600 text-red-600" : "text-gray-500"
+            }`}
+          />
+        </button>
+      </div>
+      
     </div>
   );
 }
